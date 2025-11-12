@@ -12,7 +12,7 @@ module.exports = {
 //   mode: isProd ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath,                    // important for deployed assets
+    publicPath : (process.env.HOST_PUBLIC_PATH || '/')      ,             // important for deployed assets
     filename: '[name].[contenthash].js',
     clean: true,
   },
