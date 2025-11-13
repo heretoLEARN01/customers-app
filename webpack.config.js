@@ -3,6 +3,7 @@ const { ModuleFederationPlugin } = require('@module-federation/enhanced');
 const deps = require('./package.json').dependencies;
 const path = require('path');
 
+const hostUrl = process.env.HOST_REMOTE || 'http://localhost:3000/remoteEntry.js';
 
 module.exports = {
   entry: './src/index.tsx',
@@ -12,7 +13,7 @@ module.exports = {
 //   mode: isProd ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath : (process.env.HOST_PUBLIC_PATH || '/')      ,             // important for deployed assets
+    publicPath : (process.env.HOST_PUBLIC_PATH || '/'),
     filename: '[name].[contenthash].js',
     clean: true,
   },
@@ -28,7 +29,7 @@ module.exports = {
         './Customers': './src/Customers',
       },
       remotes: {
-  hostApp: 'hostApp@http://localhost:3000/remoteEntry.js',
+  hostApp: `hostApp@${hostUrl}`,
 },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: deps.react },
