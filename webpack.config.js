@@ -10,10 +10,10 @@ module.exports = {
   mode: 'development',
   devServer: { port: 3001 },
   resolve: { extensions: ['.tsx', '.ts', '.js'] },
-//   mode: isProd ? 'production' : 'development',
+  //   mode: isProd ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath : (process.env.HOST_PUBLIC_PATH || '/'),
+    publicPath: (process.env.PUBLIC_PATH || '/'),
     filename: '[name].[contenthash].js',
     clean: true,
   },
@@ -24,13 +24,13 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'customersApp',
       filename: 'remoteEntry.js',
-      
+
       exposes: {
         './Customers': './src/Customers',
       },
       remotes: {
-  hostApp: `hostApp@${hostUrl}`,
-},
+        hostApp: `hostApp@${hostUrl}`,
+      },
       shared: {
         react: { singleton: true, eager: true, requiredVersion: deps.react },
         'react-dom': { singleton: true, eager: true, requiredVersion: deps['react-dom'] },
